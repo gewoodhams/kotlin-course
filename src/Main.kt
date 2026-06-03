@@ -7,8 +7,7 @@ fun sayHello4(greeting:String, vararg itemsToGreet:String){
 fun greetPerson2(greeting: String = "Hello", name: String = "Kotlin") = println("$greeting $name")
 
 fun main(){
-    val person = Person("Nate", "Ebel")
-    person.lastname
+    val person = Person()
+    person.printInfo()
     person.firstname
-    person.nickName
 }
