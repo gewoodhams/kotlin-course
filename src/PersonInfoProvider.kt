@@ -6,14 +6,46 @@ interface PersonInfoProvider{
      }
 }
 
-class BasicInfoProvider : PersonInfoProvider{
+interface SessionInfoProvider{
+    fun getSessionId(): String
+}
+
+open class BasicInfoProvider : PersonInfoProvider, SessionInfoProvider{
     override val providerInfo: String{
         get()="BasicInfoProvider"
+
+    open val sessionIdPrefix="Session"
+
+        override fun printInfo(person: Person) {
+            super.printInfo(person)
+            println("additional print statement")
+        }
+
+        override fun getSessionId(): String {
+            return SessionIdPrefix
+        }
     }
 }
 
 fun main(){
-    val provider = BasicInfoProvider()
+    val provider = object : PersonInfoProvider
+            override val providerInfo: String{
+                get() = "New Info Provider"
+
+        fun getSessionId() = "id"
+    }
 
     provider.printInfo(Person())
+    provider.getSessionId()
+
+    checkTypes(provider)
+}
+
+fun checkTypes(infoProvider: PersonInfoProvider){
+    if(infoProvider !is SessionInfoProvider){
+        println("not a session info proivder")
+    } else {
+        println("is a session info provider")
+        infoProvider.getSessionId()
+    }
 }
