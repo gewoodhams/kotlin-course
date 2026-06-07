@@ -25,6 +25,9 @@ object EntityFactory{
     }
 }
 
+val Entity.Medium.info: String
+    get() = "some info"
+
 sealed class Entity(){
     object Help: Entity(){
         val name = "Help"
@@ -34,10 +37,17 @@ sealed class Entity(){
     data class Hard(val id: String, val name: String, val multiplier: Float): Entity()
 }
 
-fun main(){
-    val entity = Entity.Factory.create()
-    println(entity)
+fun Medium.printInfo(){
+    println("Medium class: $id")
+}
 
-    val mediumEntity = EntityFactory.create(EntityType.MEDIUM)
-    println(mediumEntity)
+fun main(){
+    val entity1 = Entity.Easy("id", "name")
+    val entity2 = entity1.copy(name = "new name")
+
+    Entity.Medium(id = "id")
+
+    if (entity2 is Entity.Medium){
+        entity2.info()
+    }
 }
